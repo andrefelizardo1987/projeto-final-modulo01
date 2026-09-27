@@ -1,0 +1,315 @@
+/* Guardar as cores em um lugar facilita manter todas as partes da página combinando. */
+:root {
+  color-scheme: dark;
+  --fundo: #0d1714;
+  --superficie: #14231d;
+  --borda: #2a4438;
+  --texto: #f2f7f4;
+  --texto-suave: #b4c4ba;
+  --verde: #28c878;
+  --foco: #69e6a5;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--fundo);
+  color: var(--texto);
+  font-family: Manrope, "Segoe UI", Arial, sans-serif;
+  line-height: 1.5;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  color: inherit;
+}
+
+/* O contorno mostra onde está o teclado quando alguém navega com Tab. */
+:focus-visible {
+  outline: 3px solid var(--foco);
+  outline-offset: 3px;
+}
+
+.pular-conteudo {
+  position: absolute;
+  top: -5rem;
+  left: 1rem;
+  z-index: 10;
+  padding: 0.75rem 1rem;
+  background: var(--verde);
+  color: #082014;
+}
+
+.pular-conteudo:focus {
+  top: 1rem;
+}
+
+.limite-largura {
+  width: min(100% - 2rem, 72rem);
+  margin-inline: auto;
+}
+
+.cabecalho {
+  border-bottom: 1px solid var(--borda);
+}
+
+.cabecalho-conteudo {
+  display: flex;
+  align-items: center;
+  min-height: 5rem;
+}
+
+.marca {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 1.5rem;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.marca img {
+  width: 2.75rem;
+}
+
+.apresentacao,
+.como-funciona,
+.secao-perfil,
+.secao-resultados {
+  padding-block: 3rem;
+}
+
+/* Flexbox empilha no celular e permite colunas quando houver espaço. */
+.apresentacao-conteudo,
+.passos,
+.formulario-perfil,
+.filtros-campos,
+.contatos {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+}
+
+.apresentacao-texto,
+.apresentacao-imagem {
+  flex: 1 1 20rem;
+}
+
+.apresentacao-texto {
+  align-self: center;
+}
+
+.sobretitulo {
+  color: var(--foco);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+h1,
+h2,
+h3,
+p {
+  margin-top: 0;
+}
+
+h1 {
+  max-width: 16ch;
+  font-size: clamp(2.2rem, 6vw, 4.5rem);
+  line-height: 1.12;
+}
+
+h1 span {
+  color: var(--verde);
+}
+
+.apresentacao-texto > p:not(.sobretitulo),
+.secao-introducao > p:not(.sobretitulo) {
+  max-width: 60ch;
+  color: var(--texto-suave);
+}
+
+.apresentacao-imagem img {
+  width: 100%;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+  border: 1px solid var(--borda);
+  border-radius: 1rem;
+}
+
+.botao-principal {
+  display: inline-block;
+  padding: 0.85rem 1.25rem;
+  border: 0;
+  border-radius: 0.65rem;
+  background: var(--verde);
+  color: #082014;
+  font: inherit;
+  font-weight: 700;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.botao-principal:hover {
+  background: var(--foco);
+}
+
+.passos {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: passo;
+}
+
+.passos li {
+  flex: 1 1 14rem;
+  padding: 1.5rem;
+  border: 1px solid var(--borda);
+  border-radius: 0.85rem;
+  background: var(--superficie);
+  counter-increment: passo;
+}
+
+.passos li::before {
+  content: "0" counter(passo);
+  display: block;
+  margin-bottom: 0.75rem;
+  color: var(--foco);
+  font-weight: 700;
+}
+
+.passos p,
+.ajuda-campo {
+  margin-bottom: 0;
+  color: var(--texto-suave);
+}
+
+.formulario-perfil,
+.filtros-vagas {
+  padding: 1.5rem;
+  border: 1px solid var(--borda);
+  border-radius: 0.85rem;
+  background: var(--superficie);
+}
+
+.campo {
+  flex: 1 1 15rem;
+}
+
+.campo-largo {
+  flex-basis: 100%;
+}
+
+.campo-acao {
+  align-self: end;
+}
+
+label {
+  display: block;
+  margin-bottom: 0.4rem;
+  font-weight: 700;
+}
+
+input,
+textarea,
+select {
+  width: 100%;
+  padding: 0.7rem;
+  border: 1px solid var(--borda);
+  border-radius: 0.45rem;
+  background: var(--fundo);
+  color: var(--texto);
+  font: inherit;
+}
+
+textarea {
+  resize: vertical;
+}
+
+.erro-campo {
+  min-height: 1.25rem;
+  margin: 0.25rem 0 0;
+  color: #ffc2b4;
+  font-size: 0.9rem;
+}
+
+.ajuda-campo {
+  font-size: 0.9rem;
+}
+
+.status-analise {
+  padding: 1rem;
+  border-left: 3px solid var(--verde);
+  background: var(--superficie);
+}
+
+.filtros-vagas {
+  margin: 1.5rem 0;
+}
+
+.filtros-vagas legend {
+  padding-inline: 0.4rem;
+  font-weight: 700;
+}
+
+.filtros-vagas:disabled {
+  opacity: 0.65;
+}
+
+.lista-vagas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.rodape {
+  margin-top: 3rem;
+  padding-block: 2.5rem 1rem;
+  border-top: 1px solid var(--borda);
+}
+
+.contatos {
+  font-style: normal;
+  overflow-wrap: anywhere;
+}
+
+.contatos a {
+  color: var(--foco);
+}
+
+.copyright {
+  margin-top: 2rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--borda);
+  text-align: center;
+}
+
+@media (min-width: 48rem) {
+  .apresentacao,
+  .como-funciona,
+  .secao-perfil,
+  .secao-resultados {
+    padding-block: 4rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
