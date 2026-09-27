@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 34" role="img" aria-labelledby="titulo-logo">
+  <title id="titulo-logo">Coroa KingDev</title>
+  <!-- As três pontas formam uma coroa simples que continua reconhecível em tamanho pequeno. -->
+  <path d="M5 26 3 8l11 10L24 4l10 14L45 8l-2 18H5Z" fill="#C9A85C" />
+  <path d="M6 29h36" fill="none" stroke="#C9A85C" stroke-linecap="round" stroke-width="3" />
+  <circle cx="3" cy="7" r="2" fill="#69E6A5" />
+  <circle cx="24" cy="3" r="2" fill="#69E6A5" />
+  <circle cx="45" cy="7" r="2" fill="#69E6A5" />
+</svg>
