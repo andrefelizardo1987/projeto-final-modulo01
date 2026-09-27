@@ -1,0 +1,6 @@
+# Arquivos pessoais e materiais auxiliares ficam apenas no computador.
+/*.md
+!/README.md
+/*.pdf
+/*/
+!/assets/
