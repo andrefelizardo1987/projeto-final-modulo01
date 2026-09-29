@@ -1,0 +1,36 @@
+[
+  {
+    "id": "sctec-frontend-junior",
+    "empresa": "SCtec Exemplo",
+    "cargo": "Desenvolvedor Front-End Júnior",
+    "requisitos": ["HTML", "CSS", "JavaScript", "Git", "React"],
+    "salario": 3200,
+    "modalidade": "Presencial"
+  },
+  {
+    "id": "hardcode-frontend-junior",
+    "empresa": "HardCode Exemplo",
+    "cargo": "Desenvolvedor Front-End Júnior",
+    "requisitos": ["HTML", "CSS", "JavaScript", "Angular", "TypeScript"],
+    "salario": 3800,
+    "modalidade": "Remota",
+    "auxilioHomeOffice": true
+  },
+  {
+    "id": "devstart-software-junior",
+    "empresa": "DevStart Exemplo",
+    "cargo": "Desenvolvedor de Software Júnior",
+    "requisitos": ["JavaScript", "TypeScript", "Delphi", "C++", "Python"],
+    "salario": 3500,
+    "modalidade": "Remota",
+    "auxilioHomeOffice": false
+  },
+  {
+    "id": "pixellab-frontend-junior",
+    "empresa": "PixelLab Exemplo",
+    "cargo": "Desenvolvedor Front-End Júnior",
+    "requisitos": ["HTML", "CSS", "JavaScript", "Git", "Acessibilidade"],
+    "salario": 3400,
+    "modalidade": "Híbrida"
+  }
+]
