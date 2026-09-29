@@ -225,6 +225,45 @@ label {
   font-weight: 700;
 }
 
+.campo-area {
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.campo-area legend {
+  margin-bottom: 0.4rem;
+  padding: 0;
+  font-weight: 700;
+}
+
+/* As opções podem quebrar linha para caber também em telas pequenas. */
+.opcoes-area {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+}
+
+.opcao-area {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  margin: 0;
+  padding: 0.65rem 0.8rem;
+  border: 1px solid var(--borda);
+  border-radius: 0.45rem;
+  background: var(--fundo);
+  cursor: pointer;
+}
+
+.opcao-area input {
+  width: auto;
+  margin: 0;
+  padding: 0;
+  accent-color: var(--verde);
+}
+
 input,
 textarea,
 select {
@@ -239,6 +278,17 @@ select {
 
 textarea {
   resize: vertical;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: var(--texto-suave);
+  opacity: 1;
+}
+
+/* A borda acompanha a mensagem escrita; a cor sozinha não precisa explicar o erro. */
+[aria-invalid="true"] {
+  border-color: #ffc2b4;
 }
 
 .erro-campo {
@@ -258,6 +308,16 @@ textarea {
   background: var(--superficie);
 }
 
+.contador-vagas {
+  margin-block: 1.5rem;
+  padding: 1rem;
+  border: 1px solid var(--borda);
+  border-radius: 0.65rem;
+  background: var(--superficie);
+  color: var(--foco);
+  font-weight: 700;
+}
+
 .filtros-vagas {
   margin: 1.5rem 0;
 }
@@ -275,6 +335,47 @@ textarea {
   display: flex;
   flex-wrap: wrap;
   gap: 1rem;
+}
+
+#resumo-perfil,
+#melhor-vaga,
+#recomendacao,
+.cartao-vaga {
+  padding: 1.5rem;
+  border: 1px solid var(--borda);
+  border-radius: 0.85rem;
+  background: var(--superficie);
+}
+
+#resumo-perfil,
+#melhor-vaga,
+#recomendacao {
+  margin-block: 1.5rem;
+}
+
+.cartao-vaga {
+  flex: 1 1 17rem;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.percentual-vaga {
+  color: var(--foco);
+  font-weight: 700;
+}
+
+.grupo-habilidades h4 {
+  margin-bottom: 0.35rem;
+}
+
+.grupo-habilidades ul {
+  margin-top: 0;
+  padding-left: 1.25rem;
+}
+
+#titulo-resultados:focus {
+  outline: 3px solid var(--foco);
+  outline-offset: 0.25rem;
 }
 
 .rodape {
