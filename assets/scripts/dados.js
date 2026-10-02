@@ -64,6 +64,31 @@ export async function carregarVagas({
 }
 
 export const CHAVE_PERFIL = "kingdev:perfil:v2";
+export const CHAVE_TEMA = "kingdev:tema:v1";
+
+export function recuperarTema(armazenamento) {
+  try {
+    const tema = (armazenamento ?? globalThis.localStorage).getItem(CHAVE_TEMA);
+    if (tema === "claro" || tema === "escuro") return { estado: "recuperado", tema };
+    return { estado: tema === null ? "ausente" : "invalido", tema: null };
+  } catch {
+    return { estado: "indisponivel", tema: null };
+  }
+}
+
+export function salvarTema(tema, armazenamento) {
+  if (tema !== "claro" && tema !== "escuro") return { estado: "invalido" };
+
+  try {
+    // Só guardamos a palavra do tema; assim o navegador lembra a escolha na próxima visita.
+    (armazenamento ?? globalThis.localStorage).setItem(CHAVE_TEMA, tema);
+    return { estado: "salvo" };
+  } catch {
+    // Mesmo sem armazenamento, a troca de cores funciona enquanto a página está aberta.
+    return { estado: "indisponivel" };
+  }
+}
+
 const areasPermitidas = ["Front-End", "Back-End", "FullStack"];
 const estadosPermitidos = new Set("AC AL AP AM BA CE DF ES GO MA MT MS MG PA PB PR PE PI RJ RN RS RO RR SC SP SE TO".split(" "));
 const estadosCivisPermitidos = ["Solteiro", "Casado", "Viúvo"];
