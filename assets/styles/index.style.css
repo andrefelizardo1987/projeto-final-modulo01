@@ -1,13 +1,15 @@
 /* Guardar as cores em um lugar facilita manter todas as partes da página combinando. */
 :root {
   color-scheme: dark;
-  --fundo: #0d1714;
-  --superficie: #14231d;
-  --borda: #2a4438;
-  --texto: #f2f7f4;
-  --texto-suave: #b4c4ba;
-  --verde: #28c878;
-  --foco: #69e6a5;
+  --fundo: #091310;
+  --superficie: #12221c;
+  --superficie-elevada: #192d24;
+  --borda: #335044;
+  --texto: #f5faf6;
+  --texto-suave: #c1d1c6;
+  --verde: #55dc91;
+  --foco: #91f5b7;
+  --sombra: 0 1.5rem 3.5rem rgba(0, 0, 0, 0.25);
 }
 
 *,
@@ -18,14 +20,15 @@
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 1.5rem;
 }
 
 body {
   margin: 0;
   background: var(--fundo);
   color: var(--texto);
-  font-family: Manrope, "Segoe UI", Arial, sans-serif;
-  line-height: 1.5;
+  font-family: "Segoe UI Variable Text", "Segoe UI", sans-serif;
+  line-height: 1.6;
 }
 
 img {
@@ -64,20 +67,27 @@ a {
 
 .cabecalho {
   border-bottom: 1px solid var(--borda);
+  background: #0c1914;
 }
 
 .cabecalho-conteudo {
   display: flex;
   align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.75rem 2rem;
   min-height: 5rem;
+  padding-block: 0.8rem;
 }
 
 .marca {
   display: inline-flex;
   align-items: center;
   gap: 0.6rem;
-  font-size: 1.5rem;
+  font-family: "Segoe UI Variable Display", "Segoe UI", sans-serif;
+  font-size: 1.6rem;
   font-weight: 800;
+  letter-spacing: -0.055em;
   text-decoration: none;
 }
 
@@ -85,11 +95,55 @@ a {
   width: 2.75rem;
 }
 
+.navegacao {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.35rem 1.25rem;
+}
+
+.navegacao a {
+  padding-block: 0.4rem;
+  color: var(--texto-suave);
+  font-size: 0.9rem;
+  font-weight: 650;
+  text-decoration: none;
+  text-underline-offset: 0.3em;
+}
+
+.navegacao a:hover,
+.navegacao a:focus-visible {
+  color: var(--foco);
+  text-decoration: underline;
+}
+
 .apresentacao,
 .como-funciona,
 .secao-perfil,
 .secao-resultados {
   padding-block: 3rem;
+}
+
+.apresentacao {
+  position: relative;
+  overflow: hidden;
+  border-bottom: 1px solid var(--borda);
+  background:
+    radial-gradient(circle at 84% 15%, rgba(85, 220, 145, 0.16), transparent 28rem),
+    linear-gradient(135deg, #12231b 0%, var(--fundo) 62%);
+}
+
+/* A luz atrás da imagem chama atenção para a abertura sem esconder o texto. */
+.apresentacao::before {
+  content: "";
+  position: absolute;
+  width: 24rem;
+  height: 24rem;
+  right: -10rem;
+  bottom: -17rem;
+  border: 1px solid rgba(145, 245, 183, 0.25);
+  border-radius: 50%;
+  pointer-events: none;
 }
 
 /* Flexbox empilha no celular e permite colunas quando houver espaço. */
@@ -106,18 +160,40 @@ a {
 .apresentacao-texto,
 .apresentacao-imagem {
   flex: 1 1 20rem;
+  min-width: 0;
 }
 
 .apresentacao-texto {
   align-self: center;
+  position: relative;
+  z-index: 1;
 }
 
 .sobretitulo {
   color: var(--foco);
   font-size: 0.8rem;
-  font-weight: 700;
-  letter-spacing: 0.15em;
+  font-weight: 800;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
+}
+
+.apresentacao .sobretitulo {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.45rem 0.8rem;
+  border: 1px solid rgba(145, 245, 183, 0.38);
+  border-radius: 100rem;
+  background: rgba(85, 220, 145, 0.07);
+}
+
+.apresentacao .sobretitulo::before {
+  content: "";
+  width: 0.45rem;
+  height: 0.45rem;
+  border-radius: 50%;
+  background: var(--verde);
+  box-shadow: 0 0 0 0.25rem rgba(85, 220, 145, 0.14);
 }
 
 h1,
@@ -127,10 +203,18 @@ p {
   margin-top: 0;
 }
 
+h1,
+h2,
+h3 {
+  font-family: "Segoe UI Variable Display", "Segoe UI", sans-serif;
+  letter-spacing: -0.035em;
+}
+
 h1 {
   max-width: 16ch;
-  font-size: clamp(2.2rem, 6vw, 4.5rem);
-  line-height: 1.12;
+  font-size: clamp(2.35rem, 6vw, 4.8rem);
+  font-weight: 800;
+  line-height: 1.08;
 }
 
 h1 span {
@@ -143,30 +227,81 @@ h1 span {
   color: var(--texto-suave);
 }
 
+.apresentacao-texto > p:not(.sobretitulo) {
+  max-width: 48ch;
+  font-size: clamp(1rem, 1.6vw, 1.15rem);
+}
+
+.secao-introducao {
+  max-width: 52rem;
+  margin-bottom: 1.75rem;
+}
+
+.secao-introducao h2,
+.como-funciona h2 {
+  font-size: clamp(1.8rem, 3.8vw, 2.6rem);
+  line-height: 1.2;
+}
+
+.apresentacao-imagem {
+  position: relative;
+  align-self: center;
+  padding: 0.6rem;
+  border: 1px solid rgba(145, 245, 183, 0.27);
+  border-radius: 1.4rem;
+  background: rgba(85, 220, 145, 0.05);
+  box-shadow: var(--sombra);
+}
+
 .apresentacao-imagem img {
   width: 100%;
+  height: auto;
   aspect-ratio: 3 / 2;
   object-fit: cover;
-  border: 1px solid var(--borda);
-  border-radius: 1rem;
+  border-radius: 0.9rem;
+}
+
+.imagem-legenda {
+  position: absolute;
+  right: 1.2rem;
+  bottom: 1.2rem;
+  padding: 0.55rem 0.8rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 0.65rem;
+  background: rgba(9, 19, 16, 0.88);
+  color: var(--texto);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
 }
 
 .botao-principal {
   display: inline-block;
-  padding: 0.85rem 1.25rem;
+  position: relative;
+  overflow: hidden;
+  padding: 0.9rem 1.35rem;
   border: 0;
-  border-radius: 0.65rem;
+  border-radius: 0.75rem;
   background: var(--verde);
   color: #082014;
   font: inherit;
-  font-weight: 700;
+  font-weight: 800;
   text-align: center;
   text-decoration: none;
   cursor: pointer;
+  box-shadow: 0 0.65rem 1.5rem rgba(85, 220, 145, 0.18);
+  transition: transform 180ms ease, background-color 180ms ease, box-shadow 180ms ease;
 }
 
 .botao-principal:hover {
   background: var(--foco);
+  transform: translateY(-0.18rem);
+  box-shadow: 0 0.9rem 1.8rem rgba(85, 220, 145, 0.25);
+}
+
+.botao-principal:active {
+  transform: translateY(0);
+  box-shadow: 0 0.35rem 0.8rem rgba(85, 220, 145, 0.15);
 }
 
 .passos {
@@ -180,16 +315,23 @@ h1 span {
   flex: 1 1 14rem;
   padding: 1.5rem;
   border: 1px solid var(--borda);
-  border-radius: 0.85rem;
+  border-radius: 1rem;
   background: var(--superficie);
   counter-increment: passo;
 }
 
 .passos li::before {
   content: "0" counter(passo);
-  display: block;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
   margin-bottom: 0.75rem;
   color: var(--foco);
+  border: 1px solid var(--borda);
+  border-radius: 0.65rem;
+  background: var(--fundo);
   font-weight: 700;
 }
 
@@ -203,12 +345,14 @@ h1 span {
 .filtros-vagas {
   padding: 1.5rem;
   border: 1px solid var(--borda);
-  border-radius: 0.85rem;
+  border-radius: 1rem;
   background: var(--superficie);
+  box-shadow: var(--sombra);
 }
 
 .campo {
   flex: 1 1 15rem;
+  min-width: 0;
 }
 
 .campo-largo {
@@ -257,6 +401,13 @@ label {
   border-radius: 0.45rem;
   background: var(--fundo);
   cursor: pointer;
+  transition: border-color 180ms ease, background-color 180ms ease;
+}
+
+.opcao-area:hover,
+.opcao-area:has(input:checked) {
+  border-color: var(--verde);
+  background: var(--superficie-elevada);
 }
 
 .opcao-area input {
@@ -276,6 +427,20 @@ select {
   background: var(--fundo);
   color: var(--texto);
   font: inherit;
+  transition: border-color 180ms ease, box-shadow 180ms ease;
+}
+
+input:not([type="radio"]):not([type="checkbox"]):hover,
+textarea:hover,
+select:hover {
+  border-color: #638b73;
+}
+
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  border-color: var(--foco);
+  box-shadow: 0 0 0 0.2rem rgba(145, 245, 183, 0.14);
 }
 
 textarea {
@@ -307,6 +472,7 @@ textarea::placeholder {
 .status-analise {
   padding: 1rem;
   border-left: 3px solid var(--verde);
+  border-radius: 0 0.65rem 0.65rem 0;
   background: var(--superficie);
 }
 
@@ -345,7 +511,7 @@ textarea::placeholder {
 .cartao-vaga {
   padding: 1.5rem;
   border: 1px solid var(--borda);
-  border-radius: 0.85rem;
+  border-radius: 1rem;
   background: var(--superficie);
 }
 
@@ -359,6 +525,17 @@ textarea::placeholder {
   flex: 1 1 17rem;
   min-width: 0;
   overflow-wrap: anywhere;
+  transition: border-color 180ms ease, transform 180ms ease;
+}
+
+.cartao-vaga:hover {
+  border-color: var(--verde);
+  transform: translateY(-0.2rem);
+}
+
+#melhor-vaga {
+  border-color: var(--verde);
+  background: linear-gradient(135deg, var(--superficie-elevada), var(--superficie));
 }
 
 .percentual-vaga {
@@ -384,6 +561,7 @@ textarea::placeholder {
   margin-top: 3rem;
   padding-block: 2.5rem 1rem;
   border-top: 1px solid var(--borda);
+  background: #0c1914;
 }
 
 .contatos {
@@ -392,7 +570,17 @@ textarea::placeholder {
 }
 
 .contatos a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
   color: var(--foco);
+  text-underline-offset: 0.2em;
+}
+
+.contatos svg {
+  width: 1.25rem;
+  height: 1.25rem;
+  flex: 0 0 auto;
 }
 
 .copyright {
@@ -409,10 +597,72 @@ textarea::placeholder {
   .secao-resultados {
     padding-block: 4rem;
   }
+
+  .apresentacao {
+    padding-block: 5.5rem;
+  }
+
+  .apresentacao-conteudo {
+    gap: 3rem;
+  }
 }
 
+@media (max-width: 36rem) {
+  .navegacao {
+    width: 100%;
+    justify-content: space-between;
+    gap: 0.3rem;
+  }
+
+  .navegacao a {
+    font-size: 0.8rem;
+  }
+
+  .formulario-perfil,
+  .filtros-vagas {
+    padding: 1rem;
+  }
+
+  .imagem-legenda {
+    right: 1rem;
+    bottom: 1rem;
+    font-size: 0.7rem;
+  }
+}
+
+/* A entrada curta apresenta o título e a imagem sem exigir JavaScript. */
+@media (prefers-reduced-motion: no-preference) {
+  .apresentacao-texto {
+    animation: entrada-suave 650ms ease-out both;
+  }
+
+  .apresentacao-imagem {
+    animation: entrada-suave 750ms 100ms ease-out both;
+  }
+
+  @keyframes entrada-suave {
+    from {
+      opacity: 0;
+      transform: translateY(0.9rem);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
+
+/* Respeitamos a escolha de quem prefere uma página sem animações. */
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
   }
 }
