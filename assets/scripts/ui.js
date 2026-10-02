@@ -179,9 +179,22 @@ export function iniciarInterface(aoEnviarPerfil) {
     };
   }
 
+  function formularioEstaVazio() {
+    const camposSemTexto = Object.values(campos).every((campo) => campo.value.trim() === "");
+    const areaSemEscolha = radiosArea.every((radio) => !radio.checked);
+    const gruposSemEscolha = Object.values(gruposCheckboxes)
+      .every((grupo) => grupo.every((opcao) => !opcao.checked));
+
+    // O aviso geral só aparece quando a pessoa ainda não começou a preencher nada.
+    return camposSemTexto && areaSemEscolha && gruposSemEscolha;
+  }
+
   // Evitamos o recarregamento para que a nova análise substitua a anterior na mesma página.
   formulario.addEventListener("submit", (evento) => {
     evento.preventDefault();
+    if (formularioEstaVazio()) {
+      window.alert("É necessário preencher todos os campos antes de comparar com as vagas.");
+    }
     const perfil = validarPerfil();
     if (perfil) aoEnviarPerfil(perfil);
   });
