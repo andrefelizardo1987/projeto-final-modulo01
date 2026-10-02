@@ -156,9 +156,14 @@ export function converterCatalogo(registros) {
 export function encontrarMelhorVaga(resultados) {
   if (!Array.isArray(resultados) || resultados.length === 0) return null;
 
-  // Em empate, mantemos a vaga que apareceu primeiro no catálogo.
+  // Primeiro vale a compatibilidade; num empate, o salário maior decide.
+  // Se os dois números forem iguais, a primeira vaga continua escolhida.
   return resultados.reduce(
-    (melhor, atual) => (!melhor || atual.percentual > melhor.percentual ? atual : melhor),
+    (melhor, atual) => {
+      if (!melhor || atual.percentual > melhor.percentual) return atual;
+      if (atual.percentual === melhor.percentual && atual.vaga.salario > melhor.vaga.salario) return atual;
+      return melhor;
+    },
     null,
   );
 }
