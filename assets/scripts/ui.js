@@ -1,4 +1,5 @@
 import { normalizarHabilidades } from "./motor.js";
+import { recuperarTema, salvarTema } from "./dados.js";
 
 const dinheiro = new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL" });
 
@@ -68,9 +69,51 @@ function criarCartaoDaVaga(resultado) {
   return cartao;
 }
 
+export function filtrarEOrdenarResultados(resultados, modalidade = "todas", ordem = "padrao") {
+  if (!Array.isArray(resultados)) return [];
+
+  // A cópia recebe a posição original para manter os empates na ordem do catálogo.
+  const visiveis = resultados
+    .map((resultado, indice) => ({ resultado, indice }))
+    .filter(({ resultado }) => modalidade === "todas" || resultado.vaga.modalidade === modalidade);
+
+  const comparadores = {
+    "compatibilidade-maior": (a, b) => b.percentual - a.percentual,
+    "compatibilidade-menor": (a, b) => a.percentual - b.percentual,
+    "salario-maior": (a, b) => b.vaga.salario - a.vaga.salario,
+    "salario-menor": (a, b) => a.vaga.salario - b.vaga.salario,
+  };
+  const comparar = comparadores[ordem];
+  if (comparar) {
+    visiveis.sort((a, b) => comparar(a.resultado, b.resultado) || a.indice - b.indice);
+  }
+
+  return visiveis.map(({ resultado }) => resultado);
+}
+
 export function iniciarInterface(aoEnviarPerfil) {
   const formulario = document.querySelector("#formulario-perfil");
   const status = document.querySelector("#status-analise");
+  const botaoTema = document.querySelector("#alternar-tema");
+  const iconeTema = botaoTema.querySelector(".icone-tema");
+  const textoTema = botaoTema.querySelector(".texto-tema");
+  let temaAtual = recuperarTema().tema ?? "escuro";
+
+  function aplicarTema() {
+    // A página usa as cores do tema escolhido; o botão mostra a próxima opção.
+    document.documentElement.dataset.tema = temaAtual;
+    const estaEscuro = temaAtual === "escuro";
+    iconeTema.textContent = estaEscuro ? "☀" : "☾";
+    textoTema.textContent = estaEscuro ? "Tema claro" : "Tema escuro";
+  }
+
+  aplicarTema();
+  botaoTema.addEventListener("click", () => {
+    temaAtual = temaAtual === "escuro" ? "claro" : "escuro";
+    aplicarTema();
+    salvarTema(temaAtual);
+  });
+
   const campos = {
     nome: document.querySelector("#nome"),
     idade: document.querySelector("#idade"),
@@ -102,6 +145,11 @@ export function iniciarInterface(aoEnviarPerfil) {
   const contadorVagasCompativeis = document.querySelector("#contador-vagas-compativeis");
   const resumo = document.querySelector("#resumo-perfil");
   const listaDeVagas = document.querySelector("#lista-vagas");
+  const filtrosVagas = document.querySelector("#filtros-vagas");
+  const filtroModalidade = document.querySelector("#filtro-modalidade");
+  const ordenarVagas = document.querySelector("#ordenar-vagas");
+  const statusFiltros = document.querySelector("#status-filtros");
+  let relatorioAtual = null;
   const melhorVaga = document.querySelector("#melhor-vaga");
   const melhorVagaConteudo = document.querySelector("#melhor-vaga-conteudo");
   const recomendacao = document.querySelector("#recomendacao");
@@ -109,6 +157,41 @@ export function iniciarInterface(aoEnviarPerfil) {
   const tituloResultados = document.querySelector("#titulo-resultados");
   const statusPerfilSalvo = document.querySelector("#status-perfil-salvo");
   const linkAnalisarPerfil = document.querySelector("#link-analisar-perfil");
+  const reduzirMovimento = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+  function atualizarListaFiltrada() {
+    if (!relatorioAtual) return;
+    const visiveis = filtrarEOrdenarResultados(
+      relatorioAtual.resultados,
+      filtroModalidade.value,
+      ordenarVagas.value,
+    );
+
+    // Trocamos apenas os cartões; a melhor vaga e a recomendação vêm da análise completa.
+    listaDeVagas.replaceChildren(...visiveis.map(criarCartaoDaVaga));
+    if (visiveis.length === 0) {
+      listaDeVagas.append(criarElemento("p", "Nenhuma vaga corresponde ao filtro selecionado.", "lista-vazia"));
+    }
+    statusFiltros.textContent = `${visiveis.length} de ${relatorioAtual.resultados.length} vagas exibidas.`;
+  }
+
+  filtroModalidade.addEventListener("change", atualizarListaFiltrada);
+  ordenarVagas.addEventListener("change", atualizarListaFiltrada);
+
+  linkAnalisarPerfil.addEventListener("pointermove", (evento) => {
+    if (reduzirMovimento.matches || evento.pointerType !== "mouse") return;
+
+    // A luz acompanha o mouse dentro do botão, como uma lanterna pequena.
+    const limites = linkAnalisarPerfil.getBoundingClientRect();
+    linkAnalisarPerfil.style.setProperty("--brilho-x", `${evento.clientX - limites.left}px`);
+    linkAnalisarPerfil.style.setProperty("--brilho-y", `${evento.clientY - limites.top}px`);
+  });
+
+  linkAnalisarPerfil.addEventListener("pointerleave", () => {
+    // Sem o mouse, o brilho volta ao centro para o próximo uso.
+    linkAnalisarPerfil.style.removeProperty("--brilho-x");
+    linkAnalisarPerfil.style.removeProperty("--brilho-y");
+  });
 
   linkAnalisarPerfil.addEventListener("click", (evento) => {
     // Impedimos o salto automático para manter o foco no primeiro campo após a limpeza.
@@ -229,8 +312,23 @@ export function iniciarInterface(aoEnviarPerfil) {
     );
     resumo.hidden = false;
 
-    // A lista antiga sai antes de colocar os cartões da análise mais recente.
-    listaDeVagas.replaceChildren(...relatorio.resultados.map(criarCartaoDaVaga));
+    relatorioAtual = relatorio;
+    const modalidadeEscolhida = filtroModalidade.value;
+    const opcoesModalidade = [criarElemento("option", "Todas")];
+    opcoesModalidade[0].value = "todas";
+    // As opções nascem das vagas reais carregadas, sem modalidade inventada no HTML.
+    [...new Set(relatorio.resultados.map(({ vaga }) => vaga.modalidade))].forEach((modalidade) => {
+      const opcao = criarElemento("option", modalidade);
+      opcao.value = modalidade;
+      opcoesModalidade.push(opcao);
+    });
+    filtroModalidade.replaceChildren(...opcoesModalidade);
+    filtroModalidade.value = opcoesModalidade.some((opcao) => opcao.value === modalidadeEscolhida)
+      ? modalidadeEscolhida
+      : "todas";
+    filtrosVagas.hidden = false;
+    filtrosVagas.disabled = false;
+    atualizarListaFiltrada();
 
     // Uma vaga entra na contagem quando o perfil atende pelo menos um requisito.
     const totalCompativeis = relatorio.resultados.filter((resultado) => resultado.percentual > 0).length;

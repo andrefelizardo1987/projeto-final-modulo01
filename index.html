@@ -19,7 +19,12 @@
     <header class="cabecalho">
       <div class="limite-largura cabecalho-conteudo">
         <a class="marca" href="#inicio" aria-label="KingDev, voltar ao início">
-          <img src="assets/img/kingdev-logo.svg" alt="" width="44" height="34" />
+          <img
+            src="assets/img/kingdev-logo.svg"
+            alt=""
+            width="44"
+            height="34"
+          />
           <span>KingDev</span>
         </a>
         <!-- Os links levam às áreas desta única página sem criar outras telas. -->
@@ -28,22 +33,39 @@
           <a href="#perfil">Meu perfil</a>
           <a href="#resultados">Resultados</a>
         </nav>
+        <!-- O texto do botão diz qual tema será ativado ao clicar. -->
+        <button id="alternar-tema" class="alternar-tema" type="button">
+          <span class="icone-tema" aria-hidden="true">☀</span>
+          <span class="texto-tema">Tema claro</span>
+        </button>
       </div>
     </header>
 
     <main id="conteudo">
-      <section id="inicio" class="apresentacao" aria-labelledby="titulo-principal">
-        <div class="limite-largura apresentacao-conteudo">
-          <div class="apresentacao-texto">
-            <p class="sobretitulo">Seu talento, mais oportunidades</p>
-            <h1 id="titulo-principal">
-              Encontre vagas que combinam com <span>suas habilidades</span>
-            </h1>
-            <p>
-              Compare seu perfil com vagas e descubra quais
-              habilidades você já tem e quais pode desenvolver.
-            </p>
-            <a id="link-analisar-perfil" class="botao-principal" href="#perfil">Analisar meu perfil</a>
+      <section
+        id="inicio"
+        class="apresentacao"
+        aria-labelledby="titulo-principal"
+      >
+        <div class="apresentacao-conteudo">
+          <div class="hero-painel">
+            <p class="hero-selo">Seu talento, mais oportunidades</p>
+
+            <div class="hero-mensagem">
+              <h1 id="titulo-principal">
+                Encontre vagas que combinam com <span>suas habilidades</span>
+              </h1>
+              <!-- A pequena linha verde separa o título da explicação sem criar outro título. -->
+              <span class="hero-divisor" aria-hidden="true"></span>
+              <p>
+                Compare seu perfil com vagas e descubra quais habilidades você
+                já tem e quais pode desenvolver.
+              </p>
+              <a id="link-analisar-perfil" class="hero-acao" href="#perfil">
+                <span class="hero-acao-texto">Analisar meu perfil</span>
+                <span class="hero-acao-icone" aria-hidden="true">↗</span>
+              </a>
+            </div>
           </div>
           <div class="apresentacao-imagem">
             <img
@@ -53,17 +75,22 @@
               height="533"
               decoding="async"
             />
-            <span class="imagem-legenda" aria-hidden="true">Compare. Descubra. Evolua.</span>
           </div>
         </div>
       </section>
 
-      <section class="como-funciona limite-largura" aria-labelledby="titulo-como-funciona">
+      <section
+        class="como-funciona limite-largura"
+        aria-labelledby="titulo-como-funciona"
+      >
         <h2 id="titulo-como-funciona">Como funciona</h2>
         <ol class="passos">
           <li>
             <h3>Informe seu perfil</h3>
-            <p>Conte quais habilidades você conhece e qual área desperta seu interesse.</p>
+            <p>
+              Conte quais habilidades você conhece e qual área desperta seu
+              interesse.
+            </p>
           </li>
           <li>
             <h3>Compare habilidades</h3>
@@ -76,11 +103,18 @@
         </ol>
       </section>
 
-      <section id="perfil" class="secao-perfil limite-largura" aria-labelledby="titulo-perfil">
+      <section
+        id="perfil"
+        class="secao-perfil limite-largura"
+        aria-labelledby="titulo-perfil"
+      >
         <div class="secao-introducao">
           <p class="sobretitulo">Análise de perfil</p>
           <h2 id="titulo-perfil">Conte um pouco sobre você</h2>
-          <p>Preencha seus dados para comparar suas habilidades com as vagas. Só as habilidades mudam o percentual de compatibilidade.</p>
+          <p>
+            Preencha seus dados para comparar suas habilidades com as vagas. Só
+            as habilidades mudam o percentual de compatibilidade.
+          </p>
         </div>
 
         <!-- Cada label aponta para seu campo. Assim, o nome do campo também é lido por leitores de tela. -->
@@ -88,44 +122,101 @@
         <form id="formulario-perfil" class="formulario-perfil" novalidate>
           <div class="campo">
             <label for="nome">Seu nome</label>
-            <input id="nome" name="nome" type="text" autocomplete="name" minlength="2" placeholder="Ex.: Ana Silva" aria-describedby="nome-erro" required />
+            <input
+              id="nome"
+              name="nome"
+              type="text"
+              autocomplete="name"
+              minlength="2"
+              placeholder="Ex.: Ana Silva"
+              aria-describedby="nome-erro"
+              required
+            />
             <p id="nome-erro" class="erro-campo" aria-live="polite"></p>
           </div>
 
           <div class="campo">
             <label for="idade">Idade</label>
-            <input id="idade" name="idade" type="number" min="0" step="1" placeholder="Ex.: 25" aria-describedby="idade-erro" required />
+            <input
+              id="idade"
+              name="idade"
+              type="number"
+              min="0"
+              step="1"
+              placeholder="Ex.: 25"
+              aria-describedby="idade-erro"
+              required
+            />
             <p id="idade-erro" class="erro-campo" aria-live="polite"></p>
           </div>
 
           <div class="campo">
             <label for="nascimento">Data de nascimento</label>
-            <input id="nascimento" name="nascimento" type="date" autocomplete="bday" aria-describedby="nascimento-ajuda nascimento-erro" required />
-            <p id="nascimento-ajuda" class="ajuda-campo">Escolha dia, mês e ano no calendário.</p>
+            <input
+              id="nascimento"
+              name="nascimento"
+              type="date"
+              autocomplete="bday"
+              aria-describedby="nascimento-ajuda nascimento-erro"
+              required
+            />
+            <p id="nascimento-ajuda" class="ajuda-campo">
+              Escolha dia, mês e ano no calendário.
+            </p>
             <p id="nascimento-erro" class="erro-campo" aria-live="polite"></p>
           </div>
 
           <div class="campo">
             <label for="email">E-mail</label>
-            <input id="email" name="email" type="email" autocomplete="email" placeholder="Ex.: ana@email.com" aria-describedby="email-erro" required />
+            <input
+              id="email"
+              name="email"
+              type="email"
+              autocomplete="email"
+              placeholder="Ex.: ana@email.com"
+              aria-describedby="email-erro"
+              required
+            />
             <p id="email-erro" class="erro-campo" aria-live="polite"></p>
           </div>
 
           <div class="campo">
             <label for="celular">Celular</label>
-            <input id="celular" name="celular" type="tel" autocomplete="tel" placeholder="Ex.: (47) 98408-5288" aria-describedby="celular-erro" required />
+            <input
+              id="celular"
+              name="celular"
+              type="tel"
+              autocomplete="tel"
+              placeholder="Ex.: (47) 98408-5288"
+              aria-describedby="celular-erro"
+              required
+            />
             <p id="celular-erro" class="erro-campo" aria-live="polite"></p>
           </div>
 
           <div class="campo">
             <label for="cidade">Cidade</label>
-            <input id="cidade" name="cidade" type="text" autocomplete="address-level2" placeholder="Ex.: Joinville" aria-describedby="cidade-erro" required />
+            <input
+              id="cidade"
+              name="cidade"
+              type="text"
+              autocomplete="address-level2"
+              placeholder="Ex.: Joinville"
+              aria-describedby="cidade-erro"
+              required
+            />
             <p id="cidade-erro" class="erro-campo" aria-live="polite"></p>
           </div>
 
           <div class="campo">
             <label for="estado">Estado</label>
-            <select id="estado" name="estado" autocomplete="address-level1" aria-describedby="estado-erro" required>
+            <select
+              id="estado"
+              name="estado"
+              autocomplete="address-level1"
+              aria-describedby="estado-erro"
+              required
+            >
               <option value="">Selecione seu estado</option>
               <option value="AC">Acre (AC)</option>
               <option value="AL">Alagoas (AL)</option>
@@ -159,21 +250,72 @@
           </div>
 
           <!-- São checkboxes como pedido; o JavaScript deixa só uma resposta marcada em cada grupo. -->
-          <fieldset class="campo campo-largo campo-escolhas" aria-describedby="civil-erro">
+          <fieldset
+            class="campo campo-largo campo-escolhas"
+            aria-describedby="civil-erro"
+          >
             <legend>Estado civil</legend>
             <div class="opcoes-area">
-              <label class="opcao-area" for="civil-solteiro"><input id="civil-solteiro" name="civil" type="checkbox" value="Solteiro" aria-describedby="civil-erro" /> Solteiro</label>
-              <label class="opcao-area" for="civil-casado"><input id="civil-casado" name="civil" type="checkbox" value="Casado" aria-describedby="civil-erro" /> Casado</label>
-              <label class="opcao-area" for="civil-viuvo"><input id="civil-viuvo" name="civil" type="checkbox" value="Viúvo" aria-describedby="civil-erro" /> Viúvo</label>
+              <label class="opcao-area" for="civil-solteiro"
+                ><input
+                  id="civil-solteiro"
+                  name="civil"
+                  type="checkbox"
+                  value="Solteiro"
+                  aria-describedby="civil-erro"
+                />
+                Solteiro</label
+              >
+              <label class="opcao-area" for="civil-casado"
+                ><input
+                  id="civil-casado"
+                  name="civil"
+                  type="checkbox"
+                  value="Casado"
+                  aria-describedby="civil-erro"
+                />
+                Casado</label
+              >
+              <label class="opcao-area" for="civil-viuvo"
+                ><input
+                  id="civil-viuvo"
+                  name="civil"
+                  type="checkbox"
+                  value="Viúvo"
+                  aria-describedby="civil-erro"
+                />
+                Viúvo</label
+              >
             </div>
             <p id="civil-erro" class="erro-campo" aria-live="polite"></p>
           </fieldset>
 
-          <fieldset class="campo campo-largo campo-escolhas" aria-describedby="veiculo-erro">
+          <fieldset
+            class="campo campo-largo campo-escolhas"
+            aria-describedby="veiculo-erro"
+          >
             <legend>Possui veículo?</legend>
             <div class="opcoes-area">
-              <label class="opcao-area" for="veiculo-sim"><input id="veiculo-sim" name="veiculo" type="checkbox" value="Sim" aria-describedby="veiculo-erro" /> Sim</label>
-              <label class="opcao-area" for="veiculo-nao"><input id="veiculo-nao" name="veiculo" type="checkbox" value="Não" aria-describedby="veiculo-erro" /> Não</label>
+              <label class="opcao-area" for="veiculo-sim"
+                ><input
+                  id="veiculo-sim"
+                  name="veiculo"
+                  type="checkbox"
+                  value="Sim"
+                  aria-describedby="veiculo-erro"
+                />
+                Sim</label
+              >
+              <label class="opcao-area" for="veiculo-nao"
+                ><input
+                  id="veiculo-nao"
+                  name="veiculo"
+                  type="checkbox"
+                  value="Não"
+                  aria-describedby="veiculo-erro"
+                />
+                Não</label
+              >
             </div>
             <p id="veiculo-erro" class="erro-campo" aria-live="polite"></p>
           </fieldset>
@@ -183,15 +325,36 @@
             <legend>Área de interesse</legend>
             <div class="opcoes-area">
               <label class="opcao-area" for="area-front-end">
-                <input id="area-front-end" name="area" type="radio" value="Front-End" aria-describedby="area-erro" required />
+                <input
+                  id="area-front-end"
+                  name="area"
+                  type="radio"
+                  value="Front-End"
+                  aria-describedby="area-erro"
+                  required
+                />
                 Front-End
               </label>
               <label class="opcao-area" for="area-back-end">
-                <input id="area-back-end" name="area" type="radio" value="Back-End" aria-describedby="area-erro" required />
+                <input
+                  id="area-back-end"
+                  name="area"
+                  type="radio"
+                  value="Back-End"
+                  aria-describedby="area-erro"
+                  required
+                />
                 Back-End
               </label>
               <label class="opcao-area" for="area-fullstack">
-                <input id="area-fullstack" name="area" type="radio" value="FullStack" aria-describedby="area-erro" required />
+                <input
+                  id="area-fullstack"
+                  name="area"
+                  type="radio"
+                  value="FullStack"
+                  aria-describedby="area-erro"
+                  required
+                />
                 FullStack
               </label>
             </div>
@@ -208,34 +371,65 @@
               aria-describedby="ajuda-habilidades habilidades-erro"
               required
             ></textarea>
-            <p id="ajuda-habilidades" class="ajuda-campo">Separe as habilidades por vírgula. Exemplo: HTML, CSS, JavaScript.</p>
+            <p id="ajuda-habilidades" class="ajuda-campo">
+              Separe as habilidades por vírgula. Exemplo: HTML, CSS, JavaScript.
+            </p>
             <p id="habilidades-erro" class="erro-campo" aria-live="polite"></p>
           </div>
 
           <div class="campo">
             <label for="experiencia">Experiência em meses</label>
-            <input id="experiencia" name="experiencia" type="number" min="0" step="1" placeholder="Ex.: 0" aria-describedby="experiencia-erro" required />
+            <input
+              id="experiencia"
+              name="experiencia"
+              type="number"
+              min="0"
+              step="1"
+              placeholder="Ex.: 0"
+              aria-describedby="experiencia-erro"
+              required
+            />
             <p id="experiencia-erro" class="erro-campo" aria-live="polite"></p>
           </div>
 
           <!-- Explicamos o que fica no navegador para a pessoa decidir o que digitar. -->
-          <p class="ajuda-campo campo-largo">Ao comparar, esta aplicação salva todos os campos neste navegador para preenchê-los na próxima visita. Os dados não são enviados a um servidor.</p>
-          <p id="status-perfil-salvo" class="ajuda-campo campo-largo" role="status" aria-live="polite"></p>
+          <p class="ajuda-campo campo-largo">
+            Ao comparar, esta aplicação salva todos os campos neste navegador
+            para preenchê-los na próxima visita. Os dados não são enviados a um
+            servidor.
+          </p>
+          <p
+            id="status-perfil-salvo"
+            class="ajuda-campo campo-largo"
+            role="status"
+            aria-live="polite"
+          ></p>
 
           <div class="campo campo-acao">
-            <button class="botao-principal" type="submit">Comparar com vagas</button>
+            <button class="botao-principal" type="submit">
+              Comparar com vagas
+            </button>
           </div>
         </form>
       </section>
 
-      <section id="resultados" class="secao-resultados limite-largura" aria-labelledby="titulo-resultados">
+      <section
+        id="resultados"
+        class="secao-resultados limite-largura"
+        aria-labelledby="titulo-resultados"
+      >
         <div class="secao-introducao">
           <p class="sobretitulo">Suas oportunidades</p>
           <h2 id="titulo-resultados" tabindex="-1">Resultados da análise</h2>
         </div>
 
         <!-- A mensagem muda quando a análise for ligada. O leitor de tela é avisado sem sair do lugar. -->
-        <p id="status-analise" class="status-analise" role="status" aria-live="polite">
+        <p
+          id="status-analise"
+          class="status-analise"
+          role="status"
+          aria-live="polite"
+        >
           Preencha o perfil para ver a comparação com as vagas.
         </p>
 
@@ -244,7 +438,7 @@
 
         <div id="resumo-perfil" hidden></div>
 
-        <!-- Os filtros aparecerão quando a etapa de filtro e ordenação estiver pronta. -->
+        <!-- Os filtros aparecem depois da análise, quando já existem vagas para organizar. -->
         <fieldset id="filtros-vagas" class="filtros-vagas" disabled hidden>
           <legend>Filtrar e ordenar vagas</legend>
           <div class="filtros-campos">
@@ -255,18 +449,17 @@
               </select>
             </div>
             <div class="campo">
-              <label for="ordem-salario">Salário</label>
-              <select id="ordem-salario" name="ordem-salario">
+              <label for="ordenar-vagas">Ordenar por</label>
+              <select id="ordenar-vagas" name="ordenar-vagas">
                 <option value="padrao">Ordem original</option>
-              </select>
-            </div>
-            <div class="campo">
-              <label for="ordem-compatibilidade">Compatibilidade</label>
-              <select id="ordem-compatibilidade" name="ordem-compatibilidade">
-                <option value="padrao">Ordem original</option>
+                <option value="compatibilidade-maior">Maior compatibilidade</option>
+                <option value="compatibilidade-menor">Menor compatibilidade</option>
+                <option value="salario-maior">Maior salário</option>
+                <option value="salario-menor">Menor salário</option>
               </select>
             </div>
           </div>
+          <p id="status-filtros" class="status-filtros" role="status" aria-live="polite"></p>
         </fieldset>
 
         <!-- O JavaScript criará os cartões aqui; nenhum resultado é inventado no HTML. -->
@@ -277,7 +470,9 @@
           <div id="melhor-vaga-conteudo"></div>
         </section>
         <section id="recomendacao" aria-labelledby="titulo-recomendacao" hidden>
-          <h3 id="titulo-recomendacao">Recomendação para continuar aprendendo</h3>
+          <h3 id="titulo-recomendacao">
+            Recomendação para continuar aprendendo
+          </h3>
           <div id="recomendacao-conteudo"></div>
         </section>
       </section>
@@ -288,16 +483,58 @@
         <h2>Fale conosco</h2>
         <address class="contatos">
           <a href="mailto:andrefelizardo1987@gmail.com">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true" focusable="false"><rect x="2.5" y="5" width="19" height="14" rx="2" /><path d="m3 6 9 7 9-7" /></svg>
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              aria-hidden="true"
+              focusable="false"
+            >
+              <rect x="2.5" y="5" width="19" height="14" rx="2" />
+              <path d="m3 6 9 7 9-7" />
+            </svg>
             andrefelizardo1987@gmail.com
           </a>
           <a href="tel:+5547984085288">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true" focusable="false"><path d="M7 2h3l1.2 4-2 1.8a15 15 0 0 0 7 7l1.8-2L22 14v3a4 4 0 0 1-4 4C9.7 21 3 14.3 3 6a4 4 0 0 1 4-4Z" /></svg>
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              aria-hidden="true"
+              focusable="false"
+            >
+              <path
+                d="M7 2h3l1.2 4-2 1.8a15 15 0 0 0 7 7l1.8-2L22 14v3a4 4 0 0 1-4 4C9.7 21 3 14.3 3 6a4 4 0 0 1 4-4Z"
+              />
+            </svg>
             (47) 98408-5288
           </a>
-          <a href="https://www.instagram.com/andrefelizardo/" target="_blank" rel="noopener noreferrer">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true" focusable="false"><rect x="3" y="3" width="18" height="18" rx="5" /><circle cx="12" cy="12" r="4" /><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none" /></svg>
-            Instagram @andrefelizardo
+          <a
+            href="https://www.instagram.com/andrefelizardoo/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              aria-hidden="true"
+              focusable="false"
+            >
+              <rect x="3" y="3" width="18" height="18" rx="5" />
+              <circle cx="12" cy="12" r="4" />
+              <circle
+                cx="17.5"
+                cy="6.5"
+                r="1"
+                fill="currentColor"
+                stroke="none"
+              />
+            </svg>
+            Instagram @andrefelizardoo
           </a>
         </address>
         <p class="copyright">© Copyright 2026 KingDev.</p>
