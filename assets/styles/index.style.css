@@ -225,14 +225,16 @@ label {
   font-weight: 700;
 }
 
-.campo-area {
+.campo-area,
+.campo-escolhas {
   min-width: 0;
   margin: 0;
   padding: 0;
   border: 0;
 }
 
-.campo-area legend {
+.campo-area legend,
+.campo-escolhas legend {
   margin-bottom: 0.4rem;
   padding: 0;
   font-weight: 700;

@@ -42,8 +42,8 @@ export async function carregarVagas({
       resultado = criarEstado("vazio", mensagem, [], invalidos);
     } else {
       const mensagem = vagas.length === 1
-        ? "1 vaga de exemplo carregada. Preencha o perfil para analisar."
-        : `${vagas.length} vagas de exemplo carregadas. Preencha o perfil para analisar.`;
+        ? "1 vaga carregada. Preencha o perfil para analisar."
+        : `${vagas.length} vagas carregadas. Preencha o perfil para analisar.`;
       resultado = criarEstado(
         "sucesso",
         mensagem,
