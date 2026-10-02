@@ -36,7 +36,7 @@ O projeto usa HTML5 semântico, CSS externo com Flexbox e media queries, JavaScr
 | `assets/scripts/dados.js` | Leitura das vagas e persistência local. |
 | `assets/data/vagas.json` | Catálogo de vagas fictícias. |
 
-O percentual é o número de requisitos encontrados dividido pelo total de requisitos da vaga, multiplicado por 100 e arredondado. Habilidades repetidas e diferenças de maiúsculas/minúsculas ou espaços não aumentam a contagem. A experiência aparece no resumo do perfil, sem alterar esse cálculo. Em empate, a melhor vaga é a primeira na ordem do catálogo.
+O percentual é o número de requisitos encontrados dividido pelo total de requisitos da vaga, multiplicado por 100 e arredondado. Habilidades repetidas e diferenças de maiúsculas/minúsculas ou espaços não aumentam a contagem. A experiência aparece no resumo do perfil, sem alterar esse cálculo. A melhor vaga tem o maior percentual; em empate, vence a de maior salário. Se percentual e salário forem iguais, vence a primeira na ordem do catálogo.
 
 ## Verificações e melhorias possíveis
 

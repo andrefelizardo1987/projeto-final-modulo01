@@ -338,6 +338,15 @@ export function iniciarInterface(aoEnviarPerfil) {
       melhorVagaConteudo.replaceChildren(
         criarElemento("p", `${vaga.cargo} na ${vaga.empresa}: ${percentual}% de compatibilidade.`),
       );
+      const empatadas = relatorio.resultados.filter((resultado) => resultado.percentual === percentual);
+      if (empatadas.length > 1) {
+        // Explicamos por que uma vaga venceu quando outras tiveram a mesma porcentagem.
+        const mesmoSalario = empatadas.filter((resultado) => resultado.vaga.salario === vaga.salario);
+        const explicacao = mesmoSalario.length > 1
+          ? "Compatibilidade e salário empatados: foi mantida a primeira vaga do catálogo."
+          : "Compatibilidade empatada: foi escolhida a vaga com maior salário.";
+        melhorVagaConteudo.append(criarElemento("p", explicacao));
+      }
       melhorVaga.hidden = false;
     }
 
