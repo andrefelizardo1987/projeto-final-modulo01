@@ -1,13 +1,39 @@
 /* Guardar as cores em um lugar facilita manter todas as partes da página combinando. */
 :root {
   color-scheme: dark;
-  --fundo: #0d1714;
-  --superficie: #14231d;
-  --borda: #2a4438;
-  --texto: #f2f7f4;
-  --texto-suave: #b4c4ba;
-  --verde: #28c878;
-  --foco: #69e6a5;
+  --fundo: #091310;
+  --superficie: #12221c;
+  --superficie-elevada: #192d24;
+  --borda: #335044;
+  --texto: #f5faf6;
+  --texto-suave: #c1d1c6;
+  --verde: #55dc91;
+  --foco: #91f5b7;
+  --sombra: 0 1.5rem 3.5rem rgba(0, 0, 0, 0.25);
+  --cabecalho-fundo: #0c1914;
+  --hero-fundo: #0e1c16;
+  --texto-botao: #082014;
+  --campo-hover: #638b73;
+  --erro: #ffc2b4;
+}
+
+/* Trocamos as mesmas cores de toda a página para o tema claro ficar legível. */
+:root[data-tema="claro"] {
+  color-scheme: light;
+  --fundo: #f2f8f3;
+  --superficie: #ffffff;
+  --superficie-elevada: #e8f4eb;
+  --borda: #6e9278;
+  --texto: #14271b;
+  --texto-suave: #415b49;
+  --verde: #167846;
+  --foco: #0b6639;
+  --sombra: 0 1.5rem 3.5rem rgba(24, 67, 39, 0.11);
+  --cabecalho-fundo: #ffffff;
+  --hero-fundo: #e7f4e9;
+  --texto-botao: #ffffff;
+  --campo-hover: #4d8660;
+  --erro: #a32d20;
 }
 
 *,
@@ -18,14 +44,15 @@
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 1.5rem;
 }
 
 body {
   margin: 0;
   background: var(--fundo);
   color: var(--texto);
-  font-family: Manrope, "Segoe UI", Arial, sans-serif;
-  line-height: 1.5;
+  font-family: "Segoe UI Variable Text", "Segoe UI", sans-serif;
+  line-height: 1.6;
 }
 
 img {
@@ -50,7 +77,7 @@ a {
   z-index: 10;
   padding: 0.75rem 1rem;
   background: var(--verde);
-  color: #082014;
+  color: var(--texto-botao);
 }
 
 .pular-conteudo:focus {
@@ -64,20 +91,27 @@ a {
 
 .cabecalho {
   border-bottom: 1px solid var(--borda);
+  background: var(--cabecalho-fundo);
 }
 
 .cabecalho-conteudo {
   display: flex;
   align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.75rem 2rem;
   min-height: 5rem;
+  padding-block: 0.8rem;
 }
 
 .marca {
   display: inline-flex;
   align-items: center;
   gap: 0.6rem;
-  font-size: 1.5rem;
+  font-family: "Segoe UI Variable Display", "Segoe UI", sans-serif;
+  font-size: 1.6rem;
   font-weight: 800;
+  letter-spacing: -0.055em;
   text-decoration: none;
 }
 
@@ -85,11 +119,69 @@ a {
   width: 2.75rem;
 }
 
+.navegacao {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.35rem 1.25rem;
+}
+
+.navegacao a {
+  padding-block: 0.4rem;
+  color: var(--texto-suave);
+  font-size: 0.9rem;
+  font-weight: 650;
+  text-decoration: none;
+  text-underline-offset: 0.3em;
+}
+
+.navegacao a:hover,
+.navegacao a:focus-visible {
+  color: var(--foco);
+  text-decoration: underline;
+}
+
+.alternar-tema {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid var(--borda);
+  border-radius: 999px;
+  background: var(--superficie);
+  color: var(--texto);
+  font: inherit;
+  font-size: 0.85rem;
+  font-weight: 700;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: border-color 180ms ease, background-color 180ms ease, transform 180ms ease;
+}
+
+.alternar-tema:hover {
+  border-color: var(--verde);
+  background: var(--superficie-elevada);
+  transform: translateY(-0.1rem);
+}
+
+.icone-tema {
+  color: var(--foco);
+  font-size: 1.1rem;
+  line-height: 1;
+}
+
 .apresentacao,
 .como-funciona,
 .secao-perfil,
 .secao-resultados {
   padding-block: 3rem;
+}
+
+.apresentacao {
+  overflow: hidden;
+  border-bottom: 1px solid var(--borda);
+  background: var(--hero-fundo);
+  padding-block: 0;
 }
 
 /* Flexbox empilha no celular e permite colunas quando houver espaço. */
@@ -103,20 +195,165 @@ a {
   gap: 1.5rem;
 }
 
-.apresentacao-texto,
-.apresentacao-imagem {
-  flex: 1 1 20rem;
+.apresentacao-conteudo {
+  gap: 0;
+  min-height: 42rem;
 }
 
-.apresentacao-texto {
-  align-self: center;
+/* A metade esquerda mantém a mensagem centralizada ao lado da imagem. */
+.hero-painel {
+  display: flex;
+  flex: 3 1 60%;
+  flex-direction: column;
+  justify-content: center;
+  min-width: 0;
+  padding: clamp(2rem, 5vw, 4.5rem) clamp(1rem, 5vw, 5rem);
+}
+
+.hero-selo {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  margin-bottom: 1.5rem;
+  color: var(--foco);
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.hero-selo::before {
+  content: "";
+  width: 0.5rem;
+  height: 0.5rem;
+  flex: 0 0 auto;
+  border-radius: 50%;
+  background: var(--verde);
+  box-shadow: 0 0 0 0.3rem rgba(85, 220, 145, 0.16);
+}
+
+.hero-mensagem {
+  max-width: 37rem;
+}
+
+.hero-mensagem h1 {
+  max-width: 14ch;
+  font-size: clamp(2.5rem, 5vw, 4.5rem);
+  line-height: 1.1;
+}
+
+.hero-divisor {
+  display: block;
+  width: 5rem;
+  height: 0.25rem;
+  margin-block: 2rem;
+  border-radius: 100rem;
+  background: var(--verde);
+}
+
+.hero-mensagem > p {
+  max-width: 28rem;
+  margin-bottom: 1.8rem;
+  color: var(--texto-suave);
+}
+
+.hero-acao {
+  display: inline-flex;
+  position: relative;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.4rem;
+  max-width: 100%;
+  min-height: 3.8rem;
+  overflow: hidden;
+  isolation: isolate;
+  padding: 0.55rem 0.6rem 0.55rem 1.5rem;
+  border: 1px solid #a0ffd0;
+  border-radius: 999px;
+  background: linear-gradient(110deg, #33c976, #91f5b7, #34c777);
+  background-size: 200% 100%;
+  box-shadow: 0 0.7rem 1.8rem rgba(52, 214, 119, 0.22), 0 0 0 0.25rem rgba(85, 220, 145, 0.1);
+  color: #071a0f;
+  font-size: 0.92rem;
+  font-weight: 800;
+  letter-spacing: 0.045em;
+  text-decoration: none;
+  text-transform: uppercase;
+  transform: translateY(0) scale(1);
+  transition: transform 260ms cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 260ms ease;
+}
+
+/* Esta faixa atravessa o botão como um reflexo de luz. */
+.hero-acao::before {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  top: -70%;
+  left: -40%;
+  width: 45%;
+  height: 240%;
+  transform: rotate(22deg) translateX(-200%);
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.68), transparent);
+  pointer-events: none;
+}
+
+.hero-acao::after {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  background: radial-gradient(circle at var(--brilho-x, 50%) var(--brilho-y, 50%), rgba(255, 255, 255, 0.65), transparent 43%);
+  opacity: 0;
+  transition: opacity 220ms ease;
+  pointer-events: none;
+}
+
+.hero-acao:hover,
+.hero-acao:focus-visible {
+  transform: translateY(-0.3rem) scale(1.045);
+  box-shadow: 0 1.1rem 2.4rem rgba(52, 214, 119, 0.4), 0 0 0 0.45rem rgba(85, 220, 145, 0.15);
+}
+
+.hero-acao:hover::after,
+.hero-acao:focus-visible::after {
+  opacity: 1;
+}
+
+.hero-acao:active {
+  transform: translateY(0) scale(0.98);
+}
+
+.hero-acao-texto,
+.hero-acao-icone {
+  position: relative;
+  z-index: 1;
+}
+
+.hero-acao-icone {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.7rem;
+  height: 2.7rem;
+  flex: 0 0 auto;
+  border-radius: 50%;
+  background: #0d2a1a;
+  color: #eafff0;
+  font-size: 1.4rem;
+  line-height: 1;
+  transition: transform 260ms ease;
+}
+
+.hero-acao:hover .hero-acao-icone,
+.hero-acao:focus-visible .hero-acao-icone {
+  transform: rotate(45deg) scale(1.08);
 }
 
 .sobretitulo {
   color: var(--foco);
   font-size: 0.8rem;
-  font-weight: 700;
-  letter-spacing: 0.15em;
+  font-weight: 800;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
 }
 
@@ -127,46 +364,84 @@ p {
   margin-top: 0;
 }
 
+h1,
+h2,
+h3 {
+  font-family: "Segoe UI Variable Display", "Segoe UI", sans-serif;
+  letter-spacing: -0.035em;
+}
+
 h1 {
   max-width: 16ch;
-  font-size: clamp(2.2rem, 6vw, 4.5rem);
-  line-height: 1.12;
+  font-size: clamp(2.35rem, 6vw, 4.8rem);
+  font-weight: 800;
+  line-height: 1.08;
 }
 
 h1 span {
   color: var(--verde);
 }
 
-.apresentacao-texto > p:not(.sobretitulo),
 .secao-introducao > p:not(.sobretitulo) {
   max-width: 60ch;
   color: var(--texto-suave);
 }
 
+.secao-introducao {
+  max-width: 52rem;
+  margin-bottom: 1.75rem;
+}
+
+.secao-introducao h2,
+.como-funciona h2 {
+  font-size: clamp(1.8rem, 3.8vw, 2.6rem);
+  line-height: 1.2;
+}
+
+.apresentacao-imagem {
+  position: relative;
+  flex: 2 1 40%;
+  min-width: 0;
+  min-height: 42rem;
+  clip-path: polygon(25% 0, 100% 0, 100% 100%, 0 100%);
+}
+
 .apresentacao-imagem img {
+  position: absolute;
+  inset: 0;
   width: 100%;
-  aspect-ratio: 3 / 2;
+  height: 100%;
   object-fit: cover;
-  border: 1px solid var(--borda);
-  border-radius: 1rem;
+  object-position: center;
 }
 
 .botao-principal {
   display: inline-block;
-  padding: 0.85rem 1.25rem;
+  position: relative;
+  overflow: hidden;
+  padding: 0.9rem 1.35rem;
   border: 0;
-  border-radius: 0.65rem;
+  border-radius: 0.75rem;
   background: var(--verde);
-  color: #082014;
+  color: var(--texto-botao);
   font: inherit;
-  font-weight: 700;
+  font-weight: 800;
   text-align: center;
   text-decoration: none;
   cursor: pointer;
+  box-shadow: 0 0.65rem 1.5rem rgba(85, 220, 145, 0.18);
+  transition: transform 180ms ease, background-color 180ms ease, box-shadow 180ms ease;
 }
 
 .botao-principal:hover {
   background: var(--foco);
+  transform: translateY(-0.18rem);
+  box-shadow: 0 0.9rem 1.8rem rgba(85, 220, 145, 0.25);
+}
+
+.botao-principal:active {
+  transform: translateY(0);
+  box-shadow: 0 0.35rem 0.8rem rgba(85, 220, 145, 0.15);
 }
 
 .passos {
@@ -180,16 +455,23 @@ h1 span {
   flex: 1 1 14rem;
   padding: 1.5rem;
   border: 1px solid var(--borda);
-  border-radius: 0.85rem;
+  border-radius: 1rem;
   background: var(--superficie);
   counter-increment: passo;
 }
 
 .passos li::before {
   content: "0" counter(passo);
-  display: block;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
   margin-bottom: 0.75rem;
   color: var(--foco);
+  border: 1px solid var(--borda);
+  border-radius: 0.65rem;
+  background: var(--fundo);
   font-weight: 700;
 }
 
@@ -203,12 +485,14 @@ h1 span {
 .filtros-vagas {
   padding: 1.5rem;
   border: 1px solid var(--borda);
-  border-radius: 0.85rem;
+  border-radius: 1rem;
   background: var(--superficie);
+  box-shadow: var(--sombra);
 }
 
 .campo {
   flex: 1 1 15rem;
+  min-width: 0;
 }
 
 .campo-largo {
@@ -257,6 +541,13 @@ label {
   border-radius: 0.45rem;
   background: var(--fundo);
   cursor: pointer;
+  transition: border-color 180ms ease, background-color 180ms ease;
+}
+
+.opcao-area:hover,
+.opcao-area:has(input:checked) {
+  border-color: var(--verde);
+  background: var(--superficie-elevada);
 }
 
 .opcao-area input {
@@ -276,6 +567,20 @@ select {
   background: var(--fundo);
   color: var(--texto);
   font: inherit;
+  transition: border-color 180ms ease, box-shadow 180ms ease;
+}
+
+input:not([type="radio"]):not([type="checkbox"]):hover,
+textarea:hover,
+select:hover {
+  border-color: var(--campo-hover);
+}
+
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  border-color: var(--foco);
+  box-shadow: 0 0 0 0.2rem rgba(145, 245, 183, 0.14);
 }
 
 textarea {
@@ -290,14 +595,28 @@ textarea::placeholder {
 
 /* A borda acompanha a mensagem escrita; a cor sozinha não precisa explicar o erro. */
 [aria-invalid="true"] {
-  border-color: #ffc2b4;
+  border-color: var(--erro);
 }
 
 .erro-campo {
   min-height: 1.25rem;
   margin: 0.25rem 0 0;
-  color: #ffc2b4;
+  color: var(--erro);
   font-size: 0.9rem;
+}
+
+.status-formulario:empty {
+  display: none;
+}
+
+.status-formulario:not(:empty) {
+  margin: 0 0 1rem;
+  padding: 0.85rem 1rem;
+  border-left: 3px solid var(--erro);
+  border-radius: 0 0.45rem 0.45rem 0;
+  background: var(--fundo);
+  color: var(--erro);
+  font-weight: 700;
 }
 
 .ajuda-campo {
@@ -307,6 +626,7 @@ textarea::placeholder {
 .status-analise {
   padding: 1rem;
   border-left: 3px solid var(--verde);
+  border-radius: 0 0.65rem 0.65rem 0;
   background: var(--superficie);
 }
 
@@ -333,10 +653,24 @@ textarea::placeholder {
   opacity: 0.65;
 }
 
+.status-filtros {
+  margin: 1rem 0 0;
+  color: var(--texto-suave);
+  font-size: 0.9rem;
+}
+
 .lista-vagas {
   display: flex;
   flex-wrap: wrap;
   gap: 1rem;
+}
+
+.lista-vazia {
+  width: 100%;
+  padding: 1.25rem;
+  border: 1px dashed var(--borda);
+  border-radius: 0.85rem;
+  color: var(--texto-suave);
 }
 
 #resumo-perfil,
@@ -345,7 +679,7 @@ textarea::placeholder {
 .cartao-vaga {
   padding: 1.5rem;
   border: 1px solid var(--borda);
-  border-radius: 0.85rem;
+  border-radius: 1rem;
   background: var(--superficie);
 }
 
@@ -359,6 +693,17 @@ textarea::placeholder {
   flex: 1 1 17rem;
   min-width: 0;
   overflow-wrap: anywhere;
+  transition: border-color 180ms ease, transform 180ms ease;
+}
+
+.cartao-vaga:hover {
+  border-color: var(--verde);
+  transform: translateY(-0.2rem);
+}
+
+#melhor-vaga {
+  border-color: var(--verde);
+  background: linear-gradient(135deg, var(--superficie-elevada), var(--superficie));
 }
 
 .percentual-vaga {
@@ -384,6 +729,7 @@ textarea::placeholder {
   margin-top: 3rem;
   padding-block: 2.5rem 1rem;
   border-top: 1px solid var(--borda);
+  background: var(--cabecalho-fundo);
 }
 
 .contatos {
@@ -392,7 +738,17 @@ textarea::placeholder {
 }
 
 .contatos a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
   color: var(--foco);
+  text-underline-offset: 0.2em;
+}
+
+.contatos svg {
+  width: 1.25rem;
+  height: 1.25rem;
+  flex: 0 0 auto;
 }
 
 .copyright {
@@ -403,16 +759,162 @@ textarea::placeholder {
 }
 
 @media (min-width: 48rem) {
-  .apresentacao,
   .como-funciona,
   .secao-perfil,
   .secao-resultados {
     padding-block: 4rem;
   }
+
+  .apresentacao-conteudo {
+    flex-wrap: nowrap;
+  }
 }
 
+@media (max-width: 47.99rem) {
+  .apresentacao-conteudo {
+    min-height: 0;
+  }
+
+  .hero-painel {
+    flex-basis: 100%;
+  }
+
+  .hero-mensagem {
+    margin-top: 0.4rem;
+  }
+
+  /* A margem deixa a imagem inteira dentro da largura do celular. */
+  .apresentacao-imagem {
+    flex: 0 1 auto;
+    width: min(calc(100% - 2rem), 36rem);
+    max-width: 100%;
+    height: auto;
+    aspect-ratio: 3 / 2;
+    min-height: 0;
+    margin: 0 auto 1.5rem;
+    overflow: hidden;
+    border-radius: 1rem;
+    clip-path: none;
+  }
+}
+
+@media (max-width: 36rem) {
+  .marca {
+    gap: 0.4rem;
+    font-size: 1.35rem;
+  }
+
+  .marca img {
+    width: 2.25rem;
+  }
+
+  .navegacao {
+    order: 2;
+    width: 100%;
+    justify-content: space-between;
+    gap: 0.3rem;
+  }
+
+  .alternar-tema {
+    order: 1;
+    padding: 0.45rem 0.6rem;
+    font-size: 0.78rem;
+  }
+
+  .navegacao a {
+    font-size: 0.8rem;
+  }
+
+  .formulario-perfil,
+  .filtros-vagas {
+    padding: 1rem;
+  }
+
+  .hero-acao {
+    width: 100%;
+    font-size: 0.82rem;
+  }
+}
+
+/* As peças entram em sequência; a imagem abre como uma cortina diagonal. */
+@media (prefers-reduced-motion: no-preference) {
+  .hero-selo,
+  .hero-mensagem h1,
+  .hero-divisor,
+  .hero-mensagem > p {
+    animation: hero-entrada 500ms ease-out both;
+  }
+
+  .hero-mensagem h1 { animation-delay: 150ms; }
+  .hero-divisor { animation-delay: 250ms; }
+  .hero-mensagem > p { animation-delay: 350ms; }
+
+  .hero-acao {
+    animation: hero-botao-pulso 3s ease-in-out infinite, hero-botao-cores 5s linear infinite;
+  }
+
+  .hero-acao::before {
+    animation: hero-reflexo 3.4s 800ms ease-in-out infinite;
+  }
+
+  .apresentacao-imagem {
+    animation: hero-revelacao 1100ms 200ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  }
+
+  @keyframes hero-entrada {
+    from {
+      opacity: 0;
+      transform: translateY(1.2rem);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes hero-revelacao {
+    from { clip-path: polygon(100% 0, 100% 0, 100% 100%, 100% 100%); }
+    to { clip-path: polygon(25% 0, 100% 0, 100% 100%, 0 100%); }
+  }
+
+  @keyframes hero-botao-pulso {
+    0%, 100% { box-shadow: 0 0.7rem 1.8rem rgba(52, 214, 119, 0.22), 0 0 0 0.25rem rgba(85, 220, 145, 0.1); }
+    50% { box-shadow: 0 1rem 2.2rem rgba(52, 214, 119, 0.38), 0 0 0 0.55rem rgba(85, 220, 145, 0.18); }
+  }
+
+  @keyframes hero-botao-cores {
+    from { background-position: 0% 50%; }
+    to { background-position: 200% 50%; }
+  }
+
+  @keyframes hero-reflexo {
+    0%, 30% { transform: rotate(22deg) translateX(-200%); }
+    60%, 100% { transform: rotate(22deg) translateX(650%); }
+  }
+}
+
+@media (max-width: 47.99rem) and (prefers-reduced-motion: no-preference) {
+  .apresentacao-imagem {
+    animation: hero-imagem-mobile 700ms 200ms ease-out both;
+  }
+
+  @keyframes hero-imagem-mobile {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+}
+
+/* Respeitamos a escolha de quem prefere uma página sem animações. */
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
   }
 }

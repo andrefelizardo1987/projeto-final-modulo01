@@ -64,6 +64,31 @@ export async function carregarVagas({
 }
 
 export const CHAVE_PERFIL = "kingdev:perfil:v2";
+export const CHAVE_TEMA = "kingdev:tema:v1";
+
+export function recuperarTema(armazenamento) {
+  try {
+    const tema = (armazenamento ?? globalThis.localStorage).getItem(CHAVE_TEMA);
+    if (tema === "claro" || tema === "escuro") return { estado: "recuperado", tema };
+    return { estado: tema === null ? "ausente" : "invalido", tema: null };
+  } catch {
+    return { estado: "indisponivel", tema: null };
+  }
+}
+
+export function salvarTema(tema, armazenamento) {
+  if (tema !== "claro" && tema !== "escuro") return { estado: "invalido" };
+
+  try {
+    // Só guardamos a palavra do tema; assim o navegador lembra a escolha na próxima visita.
+    (armazenamento ?? globalThis.localStorage).setItem(CHAVE_TEMA, tema);
+    return { estado: "salvo" };
+  } catch {
+    // Mesmo sem armazenamento, a troca de cores funciona enquanto a página está aberta.
+    return { estado: "indisponivel" };
+  }
+}
+
 const areasPermitidas = ["Front-End", "Back-End", "FullStack"];
 const estadosPermitidos = new Set("AC AL AP AM BA CE DF ES GO MA MT MS MG PA PB PR PE PI RJ RN RS RO RR SC SP SE TO".split(" "));
 const estadosCivisPermitidos = ["Solteiro", "Casado", "Viúvo"];
@@ -72,12 +97,11 @@ function selecionarDadosParaSalvar(perfil) {
   if (perfil === null || typeof perfil !== "object" || Array.isArray(perfil)) return null;
 
   const {
-    nome, idade, dataNascimento, email, celular, cidade, estado, estadoCivil,
+    nome, dataNascimento, email, celular, cidade, estado, estadoCivil,
     possuiVeiculo, areaInteresse, habilidades, tempoExperienciaMeses,
   } = perfil;
 
   if (typeof nome !== "string" || nome.trim().length < 2) return null;
-  if (!Number.isSafeInteger(idade) || idade < 0) return null;
   if (typeof dataNascimento !== "string" || !/^\d{4}-\d{2}-\d{2}$/.test(dataNascimento)) return null;
   const nascimento = new Date(`${dataNascimento}T00:00:00Z`);
   if (Number.isNaN(nascimento.getTime()) || nascimento.toISOString().slice(0, 10) !== dataNascimento || nascimento > new Date()) return null;
@@ -96,7 +120,7 @@ function selecionarDadosParaSalvar(perfil) {
 
   // Copiamos somente os campos do formulário para restaurar o mesmo perfil depois.
   return {
-    nome: nome.trim(), idade, dataNascimento, email: email.trim(), celular: celular.trim(),
+    nome: nome.trim(), dataNascimento, email: email.trim(), celular: celular.trim(),
     cidade: cidade.trim(), estado, estadoCivil, possuiVeiculo, areaInteresse,
     habilidades: habilidadesLimpas, tempoExperienciaMeses,
   };

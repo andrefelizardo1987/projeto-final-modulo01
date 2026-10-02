@@ -6,9 +6,13 @@ import { iniciarInterface } from "./ui.js";
 const analisar = criarAnalisador();
 let catalogo = { estado: "carregando", vagas: [], mensagem: "Carregando vagas de exemplo..." };
 
-const tela = iniciarInterface((perfil) => {
+let carregamentoVagas;
+const tela = iniciarInterface(async (perfil) => {
   // Guardamos o perfil completo para que os campos voltem preenchidos na próxima visita.
   tela.mostrarEstadoDoPerfilSalvo(salvarPerfil(perfil));
+
+  // Se a pessoa clicar antes do fim do fetch, esperamos os dados para não perder a análise.
+  if (catalogo.estado === "carregando") await carregamentoVagas;
 
   if (catalogo.estado !== "sucesso") {
     tela.mostrarMensagem(catalogo.mensagem);
@@ -22,7 +26,7 @@ const tela = iniciarInterface((perfil) => {
 // Ao abrir a página, os dados salvos voltam aos campos correspondentes.
 tela.restaurarPerfil(recuperarPerfil());
 
-carregarVagas({
+carregamentoVagas = carregarVagas({
   aoMudarEstado(estado) {
     catalogo = estado;
     tela.mostrarEstadoDasVagas(estado);
