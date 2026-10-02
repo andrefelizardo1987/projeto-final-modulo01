@@ -605,6 +605,20 @@ textarea::placeholder {
   font-size: 0.9rem;
 }
 
+.status-formulario:empty {
+  display: none;
+}
+
+.status-formulario:not(:empty) {
+  margin: 0 0 1rem;
+  padding: 0.85rem 1rem;
+  border-left: 3px solid var(--erro);
+  border-radius: 0 0.45rem 0.45rem 0;
+  background: var(--fundo);
+  color: var(--erro);
+  font-weight: 700;
+}
+
 .ajuda-campo {
   font-size: 0.9rem;
 }

@@ -1,7 +1,7 @@
 [
   {
     "id": "sctec-frontend-junior",
-    "empresa": "SCtec Exemplo",
+    "empresa": "SCtec",
     "cargo": "Desenvolvedor Front-End Júnior",
     "requisitos": ["HTML", "CSS", "JavaScript", "Git", "React"],
     "salario": 3200,
@@ -9,7 +9,7 @@
   },
   {
     "id": "hardcode-frontend-junior",
-    "empresa": "HardCode Exemplo",
+    "empresa": "HardCode",
     "cargo": "Desenvolvedor Front-End Júnior",
     "requisitos": ["HTML", "CSS", "JavaScript", "Angular", "TypeScript"],
     "salario": 3800,
@@ -18,7 +18,7 @@
   },
   {
     "id": "devstart-software-junior",
-    "empresa": "DevStart Exemplo",
+    "empresa": "DevStart",
     "cargo": "Desenvolvedor de Software Júnior",
     "requisitos": ["JavaScript", "TypeScript", "Delphi", "C++", "Python"],
     "salario": 3500,
@@ -27,7 +27,7 @@
   },
   {
     "id": "pixellab-frontend-junior",
-    "empresa": "PixelLab Exemplo",
+    "empresa": "PixelLab",
     "cargo": "Desenvolvedor Front-End Júnior",
     "requisitos": ["HTML", "CSS", "JavaScript", "Git", "Acessibilidade"],
     "salario": 3400,
