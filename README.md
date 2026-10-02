@@ -47,14 +47,3 @@ Como evolução futura, seria possível ampliar o catálogo de vagas. A publica�
 ## Organização e apresentação
 
 [Acompanhe o quadro Kanban no Trello](https://trello.com/b/uyrD9Q2X/kingdev-projeto-final-modulo-01). O desenvolvimento usa `develop` para integrar mudanças e branches `feature/` para tarefas separadas. O repositório do projeto é [projeto-final-modulo01](https://github.com/andrefelizardo1987/projeto-final-modulo01).
-
-Roteiro sugerido para o vídeo de até 7 minutos:
-
-1. Explique o objetivo do KingDev e apresente o formulário.
-2. Mostre como executar com Live Server e por que o catálogo precisa de um servidor local.
-3. Demonstre uma validação e uma análise completa, incluindo melhor vaga e recomendação.
-4. Mostre tema, filtros e ordenação.
-5. Abra o Trello e o histórico de branches e commits para explicar a organização.
-6. Cite uma melhoria futura e explique quais partes foram revistas e testadas por você.
-
-O vídeo e os links de entrega devem ser enviados pelo aluno; não há link de vídeo nesta versão do README.
