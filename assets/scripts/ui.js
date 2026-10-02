@@ -107,6 +107,19 @@ export function iniciarInterface(aoEnviarPerfil) {
   const recomendacao = document.querySelector("#recomendacao");
   const recomendacaoConteudo = document.querySelector("#recomendacao-conteudo");
   const tituloResultados = document.querySelector("#titulo-resultados");
+  const statusPerfilSalvo = document.querySelector("#status-perfil-salvo");
+  const linkAnalisarPerfil = document.querySelector("#link-analisar-perfil");
+
+  linkAnalisarPerfil.addEventListener("click", (evento) => {
+    // Impedimos o salto automático para manter o foco no primeiro campo após a limpeza.
+    evento.preventDefault();
+    // O link leva ao formulário; limpamos os campos para começar outra análise.
+    formulario.reset();
+    formulario.querySelectorAll(".erro-campo").forEach((erro) => { erro.textContent = ""; });
+    formulario.querySelectorAll("[aria-invalid]").forEach((campo) => campo.removeAttribute("aria-invalid"));
+    statusPerfilSalvo.textContent = "Formulário limpo para uma nova análise. O perfil salvo volta ao recarregar a página.";
+    campos.nome.focus();
+  });
 
   function validarPerfil() {
     const nome = campos.nome.value.trim();
@@ -240,6 +253,33 @@ export function iniciarInterface(aoEnviarPerfil) {
   }
 
   return {
+    restaurarPerfil({ estado, perfil }) {
+      if (estado === "recuperado") {
+        // Cada dado volta ao campo onde a pessoa o preencheu na visita anterior.
+        campos.nome.value = perfil.nome;
+        campos.idade.value = String(perfil.idade);
+        campos.nascimento.value = perfil.dataNascimento;
+        campos.email.value = perfil.email;
+        campos.celular.value = perfil.celular;
+        campos.cidade.value = perfil.cidade;
+        campos.estado.value = perfil.estado;
+        gruposCheckboxes.civil.find((opcao) => opcao.value === perfil.estadoCivil).checked = true;
+        gruposCheckboxes.veiculo.find((opcao) => opcao.value === (perfil.possuiVeiculo ? "Sim" : "Não")).checked = true;
+        radiosArea.find((radio) => radio.value === perfil.areaInteresse).checked = true;
+        campos.habilidades.value = perfil.habilidades.join(", ");
+        campos.experiencia.value = String(perfil.tempoExperienciaMeses);
+        statusPerfilSalvo.textContent = "Seu perfil foi recuperado deste navegador. Confira os campos antes de analisar.";
+      } else if (estado === "invalido") {
+        statusPerfilSalvo.textContent = "O perfil salvo não pôde ser recuperado. Preencha o formulário novamente.";
+      } else if (estado === "indisponivel") {
+        statusPerfilSalvo.textContent = "O armazenamento do navegador está indisponível. Você ainda pode comparar vagas.";
+      }
+    },
+    mostrarEstadoDoPerfilSalvo({ estado }) {
+      statusPerfilSalvo.textContent = estado === "salvo"
+        ? "Todos os campos do perfil foram salvos neste navegador."
+        : "Não foi possível salvar o perfil. A comparação continua disponível.";
+    },
     mostrarEstadoDasVagas({ mensagem }) {
       status.textContent = mensagem;
     },
