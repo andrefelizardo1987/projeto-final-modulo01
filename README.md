@@ -2,6 +2,10 @@
 
 O KingDev é uma aplicação de página única que compara habilidades com os requisitos de vagas fictícias. Ela mostra a compatibilidade de cada vaga, destaca a melhor opção e recomenda uma habilidade para estudar em uma interface que funciona no navegador.
 
+## Acessar online
+
+[Abrir o KingDev no GitHub Pages](https://andrefelizardo1987.github.io/projeto-final-modulo01/).
+
 ## Executar localmente
 
 1. Abra a pasta do projeto no VS Code.
@@ -42,7 +46,7 @@ O percentual é o número de requisitos encontrados dividido pelo total de requi
 
 Na revisão local, foram conferidos o envio com dados inválidos, o envio corrigido com quatro cartões, a melhor vaga, a recomendação e larguras de 320, 375, 768 e 1280 px. Para verificar manualmente, tente um formulário vazio, uma data de nascimento futura e, depois, um perfil válido; alterne tema, filtro e ordenação e recarregue a página para conferir a persistência. Também vale rodar o Lighthouse no navegador para conferir acessibilidade e SEO.
 
-Como evolução futura, seria possível ampliar o catálogo de vagas. A publicação no GitHub Pages e sua URL serão acrescentadas após a etapa de publicação.
+Como evolução futura, seria possível ampliar o catálogo de vagas.
 
 ## Organização e apresentação
 
