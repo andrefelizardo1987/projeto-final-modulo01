@@ -97,12 +97,11 @@ function selecionarDadosParaSalvar(perfil) {
   if (perfil === null || typeof perfil !== "object" || Array.isArray(perfil)) return null;
 
   const {
-    nome, idade, dataNascimento, email, celular, cidade, estado, estadoCivil,
+    nome, dataNascimento, email, celular, cidade, estado, estadoCivil,
     possuiVeiculo, areaInteresse, habilidades, tempoExperienciaMeses,
   } = perfil;
 
   if (typeof nome !== "string" || nome.trim().length < 2) return null;
-  if (!Number.isSafeInteger(idade) || idade < 0) return null;
   if (typeof dataNascimento !== "string" || !/^\d{4}-\d{2}-\d{2}$/.test(dataNascimento)) return null;
   const nascimento = new Date(`${dataNascimento}T00:00:00Z`);
   if (Number.isNaN(nascimento.getTime()) || nascimento.toISOString().slice(0, 10) !== dataNascimento || nascimento > new Date()) return null;
@@ -121,7 +120,7 @@ function selecionarDadosParaSalvar(perfil) {
 
   // Copiamos somente os campos do formulário para restaurar o mesmo perfil depois.
   return {
-    nome: nome.trim(), idade, dataNascimento, email: email.trim(), celular: celular.trim(),
+    nome: nome.trim(), dataNascimento, email: email.trim(), celular: celular.trim(),
     cidade: cidade.trim(), estado, estadoCivil, possuiVeiculo, areaInteresse,
     habilidades: habilidadesLimpas, tempoExperienciaMeses,
   };

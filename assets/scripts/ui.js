@@ -94,6 +94,7 @@ export function filtrarEOrdenarResultados(resultados, modalidade = "todas", orde
 export function iniciarInterface(aoEnviarPerfil) {
   const formulario = document.querySelector("#formulario-perfil");
   const status = document.querySelector("#status-analise");
+  const statusFormulario = document.querySelector("#status-formulario");
   const botaoTema = document.querySelector("#alternar-tema");
   const iconeTema = botaoTema.querySelector(".icone-tema");
   const textoTema = botaoTema.querySelector(".texto-tema");
@@ -116,7 +117,6 @@ export function iniciarInterface(aoEnviarPerfil) {
 
   const campos = {
     nome: document.querySelector("#nome"),
-    idade: document.querySelector("#idade"),
     nascimento: document.querySelector("#nascimento"),
     email: document.querySelector("#email"),
     celular: document.querySelector("#celular"),
@@ -200,14 +200,13 @@ export function iniciarInterface(aoEnviarPerfil) {
     formulario.reset();
     formulario.querySelectorAll(".erro-campo").forEach((erro) => { erro.textContent = ""; });
     formulario.querySelectorAll("[aria-invalid]").forEach((campo) => campo.removeAttribute("aria-invalid"));
+    statusFormulario.textContent = "";
     statusPerfilSalvo.textContent = "Formulário limpo para uma nova análise. O perfil salvo volta ao recarregar a página.";
     campos.nome.focus();
   });
 
   function validarPerfil() {
     const nome = campos.nome.value.trim();
-    const idadeDigitada = campos.idade.value.trim();
-    const idade = Number(idadeDigitada);
     const dataNascimento = campos.nascimento.value;
     const idadeCalculada = calcularIdade(dataNascimento);
     const email = campos.email.value.trim();
@@ -223,16 +222,8 @@ export function iniciarInterface(aoEnviarPerfil) {
     const mesesDigitados = campos.experiencia.value.trim();
     const tempoExperienciaMeses = Number(mesesDigitados);
 
-    let erroIdade = "";
-    if (!/^\d+$/.test(idadeDigitada) || !Number.isSafeInteger(idade)) {
-      erroIdade = "Informe uma idade em anos, sem números negativos ou frações.";
-    } else if (idadeCalculada !== null && idade !== idadeCalculada) {
-      erroIdade = "A idade deve corresponder à data de nascimento.";
-    }
-
     const erros = {
       nome: nome.length >= 2 ? "" : "Informe um nome com pelo menos 2 caracteres.",
-      idade: erroIdade,
       nascimento: idadeCalculada !== null ? "" : "Informe uma data de nascimento válida que não esteja no futuro.",
       email: email && !campos.email.validity.typeMismatch ? "" : "Informe um e-mail válido.",
       celular: /^[\d\s()+-]+$/.test(celular) && /^(55)?\d{11}$/.test(numerosCelular)
@@ -264,13 +255,18 @@ export function iniciarInterface(aoEnviarPerfil) {
     });
 
     if (primeiroInvalido) {
+      const totalErros = Object.values(erros).filter(Boolean).length;
+      const primeiroErro = Object.values(erros).find(Boolean);
+      // Este aviso fica no formulário: a pessoa entende por que não viu novos cartões.
+      statusFormulario.textContent = `${totalErros} ${totalErros === 1 ? "campo precisa" : "campos precisam"} de correção. ${primeiroErro}`;
       status.textContent = "Corrija os campos indicados e tente novamente.";
       primeiroInvalido.focus();
       return null;
     }
 
+    statusFormulario.textContent = "";
     return {
-      nome, idade, dataNascimento, email, celular, cidade, estado, estadoCivil,
+      nome, dataNascimento, email, celular, cidade, estado, estadoCivil,
       possuiVeiculo: respostaVeiculo === "Sim", areaInteresse, habilidades, tempoExperienciaMeses,
     };
   }
@@ -299,7 +295,8 @@ export function iniciarInterface(aoEnviarPerfil) {
     const meses = perfil.tempoExperienciaMeses;
     resumo.replaceChildren(
       criarElemento("h3", `Perfil de ${perfil.nome}`),
-      criarElemento("p", `Idade: ${perfil.idade} anos`),
+      // A idade vem da data escolhida; não precisamos pedir a mesma informação duas vezes.
+      criarElemento("p", `Idade: ${calcularIdade(perfil.dataNascimento)} anos`),
       criarElemento("p", `Data de nascimento: ${perfil.dataNascimento.split("-").reverse().join("/")}`),
       criarElemento("p", `E-mail: ${perfil.email}`),
       criarElemento("p", `Celular: ${perfil.celular}`),
@@ -347,6 +344,7 @@ export function iniciarInterface(aoEnviarPerfil) {
     recomendacaoConteudo.replaceChildren(criarElemento("p", relatorio.recomendacao.mensagem));
     recomendacao.hidden = false;
     status.textContent = `Análise ${relatorio.totalAnalises} concluída. ${relatorio.resultados.length} vagas comparadas.`;
+    statusFormulario.textContent = "";
     tituloResultados.focus();
   }
 
@@ -355,7 +353,6 @@ export function iniciarInterface(aoEnviarPerfil) {
       if (estado === "recuperado") {
         // Cada dado volta ao campo onde a pessoa o preencheu na visita anterior.
         campos.nome.value = perfil.nome;
-        campos.idade.value = String(perfil.idade);
         campos.nascimento.value = perfil.dataNascimento;
         campos.email.value = perfil.email;
         campos.celular.value = perfil.celular;
@@ -383,6 +380,8 @@ export function iniciarInterface(aoEnviarPerfil) {
     },
     mostrarMensagem(mensagem) {
       status.textContent = mensagem;
+      // Também avisamos junto ao formulário se as vagas impedirem a comparação.
+      statusFormulario.textContent = mensagem;
     },
     mostrarRelatorio,
   };
