@@ -37,7 +37,7 @@
               Compare seu perfil com vagas e descubra quais
               habilidades você já tem e quais pode desenvolver.
             </p>
-            <a class="botao-principal" href="#perfil">Analisar meu perfil</a>
+            <a id="link-analisar-perfil" class="botao-principal" href="#perfil">Analisar meu perfil</a>
           </div>
           <div class="apresentacao-imagem">
             <img
@@ -209,6 +209,10 @@
             <input id="experiencia" name="experiencia" type="number" min="0" step="1" placeholder="Ex.: 0" aria-describedby="experiencia-erro" required />
             <p id="experiencia-erro" class="erro-campo" aria-live="polite"></p>
           </div>
+
+          <!-- Explicamos o que fica no navegador para a pessoa decidir o que digitar. -->
+          <p class="ajuda-campo campo-largo">Ao comparar, esta aplicação salva todos os campos neste navegador para preenchê-los na próxima visita. Os dados não são enviados a um servidor.</p>
+          <p id="status-perfil-salvo" class="ajuda-campo campo-largo" role="status" aria-live="polite"></p>
 
           <div class="campo campo-acao">
             <button class="botao-principal" type="submit">Comparar com vagas</button>
