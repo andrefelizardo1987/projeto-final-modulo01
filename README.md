@@ -51,3 +51,5 @@ Como evolução futura, seria possível ampliar o catálogo de vagas.
 ## Organização e apresentação
 
 [Acompanhe o quadro Kanban no Trello](https://trello.com/b/uyrD9Q2X/kingdev-projeto-final-modulo-01). O desenvolvimento usa `develop` para integrar mudanças e branches `feature/` para tarefas separadas. O repositório do projeto é [projeto-final-modulo01](https://github.com/andrefelizardo1987/projeto-final-modulo01).
+
+[Link do Vídeo] (https://drive.google.com/drive/folders/1U9DIcP7N1aLByTZ3Ae6si0yDEyuy0P0e?usp=sharing).
